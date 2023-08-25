@@ -44,6 +44,12 @@ type Inbound struct {
 	Sniffing       string   `json:"sniffing" form:"sniffing"`
 }
 
+type InboundClientIps struct {
+	Id          int    `json:"id" gorm:"primaryKey;autoIncrement"`
+	ClientEmail string `json:"clientEmail" form:"clientEmail" gorm:"unique"`
+	Ips         string `json:"ips" form:"ips"`
+}
+
 func (i *Inbound) GenXrayInboundConfig() *xray.InboundConfig {
 	listen := i.Listen
 	if listen != "" {
@@ -71,6 +77,9 @@ type Client struct {
 	Password   string `json:"password"`
 	Flow       string `json:"flow"`
 	Email      string `json:"email"`
+	Name       string `json:"name"`
+	Contact    string `json:"contact"`
+	LimitIP    int    `json:"limitIp"`
 	TotalGB    int64  `json:"totalGB" form:"totalGB"`
 	ExpiryTime int64  `json:"expiryTime" form:"expiryTime"`
 	Enable     bool   `json:"enable" form:"enable"`
